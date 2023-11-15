@@ -35,12 +35,12 @@ const routes = [
     {
         path: "/addproduct",
         name: "addproduct",
-        component: () => import("@/views/AddProduct.vue"),
+        component: () => import("@/views/Add.vue"),
     },
     {
         path: "/editproduct/:id",
         name: "editproduct",
-        component: () => import("@/views/EditProduct.vue"),
+        component: () => import("@/views/Edit.vue"),
     },
     {
         path: "/profile",
