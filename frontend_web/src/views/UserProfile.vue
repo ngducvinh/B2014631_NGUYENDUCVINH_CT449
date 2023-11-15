@@ -40,7 +40,7 @@ export default {
 	<div style="display: flex;">
 	<div v-if="currentUser" style="margin-left: 600px; padding-bottom: 140px;">
 		<header>
-			<h3 style="text-align: center;">
+			<h3 class="mt-4" style="text-align: center;">
 				THÔNG TIN KHÁCH HÀNG 
 				 
 

@@ -99,9 +99,9 @@
         <Field type="text" class="form-control" id="colorproduct" name="color"   v-model="productLocal.color"/>
           <ErrorMessage name="color" class="text-danger" />
       </div>
-      <button type="submit" class="btn btn-primary">Lưu</button>
+      <button type="submit" class="btn btn-primary mt-2">Lưu</button>
        <router-link to="/ListSP" style="margin: 10px;">
-            <button class="btn btn-danger">Trở về</button>
+            <button class="btn btn-danger mt-2">Trở về</button>
         </router-link>
       <br>
     </Form>

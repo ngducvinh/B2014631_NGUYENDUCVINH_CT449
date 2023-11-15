@@ -3,10 +3,14 @@ import CartService from '../services/Cart.service';
 import { mapState, mapActions } from "pinia";
 import { useAuthStore } from "@/stores/Auth.store";
 import toast from '../assets/js/toasts';
+import axios from 'axios';
 export default {
   data() {
     return {
       carts: [],
+      searchQuery: '',
+      searchResults: [],
+      showSearchResults: false,
       toasts: {
         title: "Warning",
         msg: "Bạn chưa đăng nhập",
@@ -60,6 +64,21 @@ export default {
       } else {
         this.$router.push({ name: "CartShop" });
       }
+    },
+    async searchProduct() {
+      try {
+        const response = await axios.get('/api/products/search', {
+          params: { title: this.searchQuery }
+        });
+        this.searchResults = response.data;
+        this.showSearchResults = true;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    hideSearchResults() {
+      // Khi rời chuột, ẩn kết quả tìm kiếm
+      this.showSearchResults = false;
     }
   },
   created() {
@@ -90,6 +109,11 @@ export default {
               Trang chủ
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/New" class="nav-link text-dark font-weight-bold" aria-current="page">
+              Tin tức
+            </router-link>
+          </li>
 
         </ul>
         <!-- <form class="d-flex flex-mb">
@@ -97,6 +121,27 @@ export default {
         <button class="btn btn-dark" type="button" @click="slideSearch()"><i class="bi bi-search icon"></i></button>
       </form> -->
 
+        <div class="search-container" @mouseleave="hideSearchResults">
+      <!-- Giao diện để nhập tên sản phẩm cần tìm kiếm -->
+      <input type="text" v-model="searchQuery" placeholder="Nhập tên sản phẩm">
+      <button class="search-button" @click="searchProduct">
+        Tìm kiếm
+        
+      </button>
+
+      <!-- Hiển thị kết quả tìm kiếm -->
+      <div v-show="showSearchResults" class="" >
+        <div v-if="searchResults.length > 0">
+          <div class ="searchResult d-flex  justify-content-around font-weight-bold py-2" v-for="product in searchResults" :key="product._id">
+            <span> {{ product.title }} </span>
+            <img :src="product.img[0]" alt="Product Image" class="productImg"> <!-- Hiển thị thông tin sản phẩm, thay .name bằng trường dữ liệu tương ứng -->
+        </div>
+        </div>
+      <div v-else>
+        <p class="mt-2">Không có kết quả tìm kiếm.</p>
+      </div>
+      </div>
+    </div>
         <div class="Cart">
           <div class="wrapper_cart">
             <div class="cart_link" id="cart_link">
@@ -149,6 +194,38 @@ export default {
 .connect-shop {
   padding: 0;
 }
+.search-container{
+position: relative;
+}
+.search-button {
+  padding: 2px;
+  background-color: #f2f2f2;
+  color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+.search-button:focus {
+  outline: navy;
+  border-color: #4CAF50
+}
+
+.searchResult{
+  position: absolute;
+  top: 30px; /* Hiển thị dưới ô tìm kiếm */
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
 
 .connect-shop a:hover {
   background-color: rgba(5, 5, 5, 0.8);
@@ -157,6 +234,7 @@ export default {
 .connect-shop a {
   padding: 10px 10px;
 }
+
 
 .navbar-dark .navbar-nav .nav-link {
   color: white;
@@ -172,7 +250,11 @@ export default {
   width: 50px;
   height: 50px;
 }
-
+.productImg {
+  width: 30%;
+  height: 30%;
+  object-fit: cover;
+}
 .quantity_cart {
   position: absolute;
   top: 5px;

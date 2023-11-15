@@ -1,6 +1,6 @@
 <template >
   <!-- Remove the container if you want to extend the Footer to full width. -->
- <div class=" my-5">
+ <div class=" my-5 footer-container">
    <footer>
    <section class="text-center container mt-3">
      <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3">
@@ -182,5 +182,8 @@
      background-color: #2d2dc8; /* Màu sắc khi hover */
      cursor: pointer; /* Thay đổi con trỏ chuột khi hover */
    }
+.footer-container{
+  background-color: #CCCC00;
+}
   
  </style>

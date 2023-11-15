@@ -55,7 +55,19 @@ router.get("/find/:id",async (req, res) => {
     res.status(500).json(err);
   }
 });
+router.get("/search", async (req, res) => {
+  const productName = req.query.title; // Fetch the name parameter from the query
 
+  try {
+    const products = await Product.find({
+      title: { $regex: new RegExp(productName, "i") }, // Search using a case-insensitive regular expression
+    });
+
+    res.status(200).json(products);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 //GET ALL PRODUCTS
 router.get("/",async (req, res) => {
   const qNew = req.query.new;

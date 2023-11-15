@@ -2,7 +2,7 @@
 <HeaderShop></HeaderShop>
 <toastsVue></toastsVue>
     <div v-if="product" class="page">
-		<h4>Hiệu chỉnh Liên hệ</h4>
+		<h4 class="text-center mt-4">Hiệu chỉnh Sản phẩm</h4>
 		<Productform
 			  :product="product"
               @submit:product="updateProduct"

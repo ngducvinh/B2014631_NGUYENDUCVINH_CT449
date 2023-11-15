@@ -47,7 +47,7 @@ export default {
 <toastsVue></toastsVue>
 	<div class="page">
 		<div>
-			<h4>THÊM SẢN PHẨM</h4>
+			<h4 class="text-center mt-4">THÊM SẢN PHẨM</h4>
 			<Productform
 				:product="{img:[]}"
         @submit:product="addproduct"
